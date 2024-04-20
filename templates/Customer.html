@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Customer Details</title>
+  <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
+  <style>
+	/* CSS Styles */
+	body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-image: url("./static/con.jpeg"); /* Your background image path */
+	background-size: 1600px 1100px; /* Cover the entire viewport */
+	background-position:center ; /* Center the background image */
+	background-repeat: no-repeat; /* Do not repeat the background image */
+	color: #333; /* Default text color */
+}
+
+.container {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: rgba(255, 255, 255, 0.8);
+}
+
+.button-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.input-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.input-group {
+    flex: 0 0 calc(50% - 10px);
+    margin-bottom: 10px;
+}
+
+.input-group label {
+    width: 40%;
+    margin-right: 10px;
+}
+
+.input-group input {
+    flex: 1;
+}
+button[type="submit"] {
+			align-content: center;
+			 padding: 8px 16px;
+			 cursor: pointer;
+			 background-color: #e8ad53;
+			 color: white;
+			 border: none;
+			 border-radius: 5px;
+			 margin-top: 20px;
+		 }
+		 button[type="submit"]:hover {
+				 background-color: #f3a109;
+			 }
+		
+.button-container {
+	
+    display: inline-block;
+    flex-direction: column; /* Align items in a column */
+    align-items: flex-start; /* Align items to the start of the column */
+}
+
+.button-container button {
+    margin-bottom: 10px; /* Add margin between buttons */
+}
+
+h1 {
+		text-align: center;
+	}
+
+	button {
+		padding: 6px 12px; /* Reduced button padding */
+		margin: 5px 0; /* Adjusted button margin */
+		cursor: pointer;
+		background-color: #4CAF50;
+		color: white;
+		border: none;
+		border-radius: 5px;
+	}
+
+	button:hover {
+		background-color: #45a049;
+	}
+
+	input[type="text"],
+	input[type="number"] {
+		display: flex;
+		width: calc(100% - 20px); /* Adjusted input width */
+		padding: 5px;
+		margin: 8px 0;
+		border: 1px solid #ccc;
+		border-radius: 4px;
+	}
+
+	label {
+		margin-top: 10px;
+	}
+
+	p {
+		margin-top: 10px;
+	}
+	.modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1; /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: #fae9323b; /* Black w/ opacity */
+        }
+
+        /* Modal content */
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto; /* 15% from the top and centered */
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%; /* Could be more or less, depending on screen size */
+            max-width: 600px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+        }
+
+        /* Close button */
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 38px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+		fieldset {
+    border: 1px solid #ccc; /* Add border */
+    border-radius: 5px; /* Add border radius */
+    padding: 20px; /* Add padding */
+    margin-bottom: 20px; /* Add margin */
+    background-color:transparent; /* Background color */
+}
+
+</style>
+</head>
+<body onload="connect()">
+	<div class="container">
+		
+		<h1>Customer Details</h1>
+		<div id="predictionModal" class="modal">
+			<div class="modal-content">
+				<span class="close" onclick="closeModal()">&times;</span>
+				<h2>Prediction Result</h2>
+				<p id="predictionText"></p>
+			</div>
+		</div>
+	
+		<h1 id="user"></h1>
+
+		<div class="button-container">
+
+			<p id="contractArea"></p>
+			<p id="contractStatus"></p>
+			<button onclick="getuIDR()">Get Unique milk ID</button>
+			<input type="number" id="milkNum">
+			<p id="milkArea"></p>
+		</div>
+	
+		<div class="input-container">
+			<div class="input-group">
+				<label for="uID">Unique ID:</label>
+				<input type="text" id="uID" name="uID" required>
+			</div>
+			<div class="input-group">
+				<label for="price">Price:</label>
+				<input type="number" id="price" name="price" required>
+			</div>
+		</div>
+		
+			<form id="predictionForm" method="POST" onsubmit="event.preventDefault(); submitForm();">
+				<div class="input-container">
+		
+			<div class="input-group">
+				<label for="pH">pH:</label>
+				<input type="number" id="pH" name="pH" required>
+			</div>
+			<div class="input-group">
+				<label for="temp">Temperature:</label>
+				<input type="number" id="temp" name="temp" required>
+			
+						</div>
+				</div>
+				<div class="input-container">
+						<div class="input-group">
+							<label for="taste">Taste:</label>
+							<input type="text" id="taste" name="taste" required>
+							</div>
+							<div class="input-group">
+							<label for="odor">Odor:</label>
+							<input type="text" id="odor" name="odor" required>
+							</div>
+				</div>
+				<div class="input-container">
+							<div class="input-group">
+							<label for="fat">Fat:</label>
+							<input type="text" id="fat" name="fat" required>
+							</div>
+							<div class="input-group">
+							<label for="turbidity">Turbidity:</label>
+							<input type="text" id="turbidity" name="turbidity" required>
+							</div>
+							</div>
+							<div class="input-container">
+							<div class="input-group">
+							<label for="colour">Colour:</label>
+							<input type="number" id="colour" name="colour" required>
+							</div>							
+							<div class="input-group">
+
+					<button type="submit">Check Milk Quality</button>
+				</div>
+							</div>
+				</form>
+				 
+			<div class="input-container">	
+			<div class="input-group">
+				<label for="cost">Cost:</label>
+				<input type="number" id="cost" required>
+			</div>
+			<div class="input-group">
+			
+				<label for="to">Retailer Address:</label>
+				<input type="text" id="to"  required>
+			</div>
+				<button onclick="payretailer()">Pay</button>
+				
+				<button onclick="getBalanace()">Check Balance</button>
+				<p id="bal"></p>
+			</div>
+			
+		
+	
+		<button type="button" onclick="cust()">Customer Details</button>
+
+		<button onClick="getMilk()">Get Milk details</button>
+        <input type="text" id="uid" placeholder="Enter milk uID">
+		<p id="dataArea"></p>
+		<p id="dataArea1"></p>
+		<p id="dataArea2"></p>
+
+		<div id="tableContainer"></div>
+
+	</div>
+	<!-- <script src="./index.js"></script> -->
+	<script src="{{ url_for('static', filename='index.js') }}"></script>
+
+  <script>
+    const cust= async () => {
+		console.log(account);
+      let uID = document.getElementById("uID").value;
+      const cusID = account;
+      const pH = parseInt(document.getElementById("pH").value);
+      const temp = parseInt(document.getElementById("temp").value);
+      const price = parseInt(document.getElementById("price").value);
+      uID = web3.utils.asciiToHex(uID);
+      await window.contract.methods.CustomerDetails(web3.utils.hexToAscii(uID), cusID, pH, temp, price).send({
+        from: account,
+        gas: 5000000
+      });
+    }
+
+   
+    const getuIDR = async () => {
+      const milID = document.getElementById("milkNum").value;
+      const uID = await window.contract.methods.getUniquemilkID(milID).call();
+      document.getElementById("milkArea").innerHTML = uID;
+	  
+    };
+	function generateDynamicTable(data) {
+            // Create table element
+			const table = document.createElement("table");
+
+// Create table header row
+const headers = ["Stage","UserType", "pH", "Temp", "Price"]; // Column headings
+const headerRow = document.createElement("tr");
+headers.forEach(header => {
+	const th = document.createElement("th");
+	th.textContent = header;
+	headerRow.appendChild(th);
+});
+table.appendChild(headerRow);
+
+// Create table rows with data
+data.forEach(rowData => {
+	const row = document.createElement("tr");
+	rowData.forEach(item => {
+		const cell = document.createElement("td");
+		cell.textContent = item;
+		row.appendChild(cell);
+	});
+	table.appendChild(row);
+});
+
+return table;
+}
+
+        // Function to get milk details
+        const getMilk=async()=> {
+            //const uid = document.getElementById("uid").value;
+			let uID=document.getElementById("uid").value;
+            uID=web3.utils.asciiToHex(uID);
+            const data1=await window.contract.methods.getMilkDetails(web3.utils.hexToAscii(uID)).call();
+			document.getElementById("dataArea").innerHTML="original location:"+data1[0];
+            document.getElementById("dataArea1").innerHTML="cattle details:"+data1[1];
+			document.getElementById("dataArea2").innerHTML="Date Added:"+data1[5];
+
+            // Sample data for pH, temp, price (Replace with actual data retrieval)
+			const pH = data1[2][0];
+            const temp = data1[3][0];
+            const price = data1[4][0];
+			const usertype="Milkman";
+			const stage="Collect";
+			const pH1 = data1[2][1];
+            const temp1 = data1[3][1];
+            const price1 = data1[4][1];
+			const usertype1="Cop";
+			const stage1="Record";
+			const pH2 = data1[2][2];
+            const temp2 = data1[3][2];
+            const price2 = data1[4][1];
+			const usertype2="Cop";
+			const stage2="Audit";
+			const pH3 = data1[2][3];
+            const temp3 = data1[3][3];
+            const price3 = data1[4][2];
+			const usertype3="Retailer";
+			const stage3="Retailed";
+			const pH4 = data1[2][4];
+            const temp4 = data1[3][4];
+            const price4 = data1[4][3];
+			const usertype4="Customer";
+			const stage4="Bought";
+			const data = [
+                [stage,usertype, pH, temp, price],
+                [stage1,usertype1, pH1, temp1, price1],
+				[stage2,usertype2, pH2, temp2, price2],
+				[stage3,usertype3, pH3, temp3, price3],
+				[stage4,usertype4, pH4, temp4, price4]
+
+
+            ];
+            
+            const container = document.getElementById("tableContainer");
+            // Clear existing table if any
+            container.innerHTML = "";
+            // Generate and append dynamic table
+            container.appendChild(generateDynamicTable(data));
+        }
+		const payretailer=async()=>{
+			const cost=document.getElementById("cost").value;
+			const toadd=document.getElementById("to").value;
+			await web3.eth.sendTransaction({from:account,to:toadd,value:web3.utils.toWei(cost,"ether")});
+		}
+		const getBalanace=async()=>{
+			try {
+        const balanceInWei = await web3.eth.getBalance(account);
+        const balanceInEther = web3.utils.fromWei(balanceInWei, 'ether');
+        document.getElementById("bal").innerHTML = balanceInEther;
+    } catch (error) {
+        console.error("Error getting balance:", error);
+    }
+		}
+		// Function to open the modal
+		function openModal() {
+           var modal = document.getElementById('predictionModal');
+            modal.style.display = 'block';
+         }
+           // Function to close the modal
+        function closeModal() {
+            var modal = document.getElementById('predictionModal');
+            modal.style.display = 'none';
+        }
+
+        // Function to handle form submission
+        function submitForm() {
+            // Get form data
+            var form = document.getElementById('predictionForm');
+            var formData = new FormData(form);
+
+            // Make POST request to Flask route
+            fetch('/predict1', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Display prediction result in the modal
+                var predictionText = document.getElementById('predictionText');
+                predictionText.innerText = 'Milk Quality is: ' + data.prediction ;
+                openModal();
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+		
+
+  </script>
+</body>
+</html>

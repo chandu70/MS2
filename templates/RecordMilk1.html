@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Record Details</title>
+    <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
+	<style>
+		body {
+		 margin: 0;
+		 padding: 0;
+		 font-family: Arial, sans-serif;
+		 background-image: url("./static/Coop.jpeg"); /* Your background image path */
+		 background-size: 1400px 1100px; /* Cover the entire viewport */
+		 background-position:center ; /* Center the background image */
+		 background-repeat: no-repeat; /* Do not repeat the background image */
+		 color: #333; /* Default text color */
+	 }
+	 
+	 .container {
+		 max-width: 600px;
+		 margin: 20px auto;
+		 padding: 20px;
+		 border: 1px solid #ccc;
+		 border-radius: 5px;
+		 background-color: rgba(255, 255, 255, 0.8);
+	 }
+	 
+	 .button-container {
+		 display: flex;
+		 flex-wrap: wrap;
+		 justify-content: space-between;
+		 margin-bottom: 20px;
+	 }
+	 
+	 .input-container {
+		 display: flex;
+		 flex-wrap: wrap;
+		 justify-content: space-between;
+	 }
+	 
+	 .input-group {
+		 flex: 0 0 calc(50% - 10px);
+		 margin-bottom: 10px;
+	 }
+	 
+	 .input-group label {
+		 width: 40%;
+		 margin-right: 10px;
+	 }
+	 
+	 .input-group input {
+		 flex: 1;
+	 }
+	 
+	 button[type="submit"] {
+		 padding: 8px 16px;
+		 cursor: pointer;
+		 background-color: #4CAF50;
+		 color: white;
+		 border: none;
+		 border-radius: 5px;
+		 margin-top: 20px;
+	 }
+	 .button-container {
+		 display: flex;
+		 flex-direction: column; /* Align items in a column */
+		 align-items: flex-start; /* Align items to the start of the column */
+	 }
+	 
+	 .button-container button {
+		 margin-bottom: 10px; /* Add margin between buttons */
+	 }
+	 
+	 h1 {
+			 text-align: center;
+		 }
+	 
+		 button {
+			 padding: 6px 12px; /* Reduced button padding */
+			 margin: 5px 0; /* Adjusted button margin */
+			 cursor: pointer;
+			 background-color: #4CAF50;
+			 color: white;
+			 border: none;
+			 border-radius: 5px;
+		 }
+	 
+		 button:hover {
+			 background-color: #45a049;
+		 }
+	 
+		 input[type="text"],
+		 input[type="number"] {
+			 width: calc(100% - 20px); /* Adjusted input width */
+			 padding: 10px;
+			 margin: 8px 0;
+			 border: 1px solid #ccc;
+			 border-radius: 4px;
+		 }
+	 
+		 label {
+			 margin-top: 10px;
+		 }
+	 
+		 p {
+			 margin-top: 10px;
+		 }
+	 
+		 #contractArea,
+		 #contrcatStatus,
+		 #milkArea {
+		   margin-top: 10px;
+		 }
+	   </style>
+	
+</head>
+<body onload="connect()">
+    <div class="container">
+        <h1>Record Details</h1>
+        <!-- <button onClick="connect()">Connect to Metamask</button>
+        <button onClick="connectContract()">Connect to Contract</button> -->
+        <p id="contractStatus"></p>
+		<p id="contractArea"></p>
+		<h1 id="user"></h1>
+
+        <button onclick="getuIDr()">Get Unique milk ID</button>
+        <input type="number" id="milkNum">
+        <p id="milkArea"></p>
+        <div class="input-container">
+			<div class="input-group">
+				<label for="uID">Unique ID:</label>
+				<input type="text" id="uID" name="uID" required>
+			</div>
+			
+			<div class="input-group">
+				<label for="pH">pH:</label>
+				<input type="number" id="pH" name="pH" required>
+			</div>
+			<div class="input-group">
+				<label for="temp">Temperature:</label>
+				<input type="number" id="temp" name="temp" required>
+			</div>
+			<div class="input-group">
+				<label for="price">Price:</label>
+				<input type="number" id="price" name="price" required><br>
+			</div>
+		</div>
+
+        <button onclick="recordDetails()">Record Details</button>
+        <div id="feedback"></div>
+     
+        <button onClick="getMilk()">Get Milk details</button>
+        <input type="text" id="uid" placeholder="Enter milk uID">
+        
+        <p id="dataArea"></p>
+        <p id="dataArea1"></p>
+        <p id="dataArea2"></p>
+        <p id="dataArea3"></p>
+        <p id="dataArea4"></p>
+
+        <button onClick="getMilkSupplyChain()">Get Milk Supply Chain details</button>
+        <input type="text" id="uId" placeholder="Enter milk uID">
+        
+        <p id="DataArea"></p>
+        <p id="DataArea1"></p>
+        <p id="DataArea2"></p>
+        <p id="DataArea3"></p>
+        <p id="DataArea4"></p>
+        <p id="DataArea5"></p>
+        <p id="DataArea6"></p>
+
+        <button id="mybutton" onclick="audit()">Audit</button>
+		<div id="tableContainer"></div>
+
+    </div>
+	<!-- <script src="./index.js"></script> -->
+	<script src="{{ url_for('static', filename='index.js') }}"></script>
+
+
+        <script>
+        
+const recordDetails=async()=>{
+    
+    let unum = document.getElementById("uID").value;
+       unum=web3.utils.asciiToHex(unum);
+        const copid=account;
+               const price = parseInt(document.getElementById("price").value);
+               const pH = parseInt(document.getElementById("pH").value);
+               const temp = parseInt(document.getElementById("temp").value);
+   
+       window.contract.methods.recorddetails(web3.utils.hexToAscii(unum),copid,price,pH,temp).send({from:account,gas:4000000})
+   }
+   
+//    const getMilk=async()=>{
+//    // 	let val='0x882a4ddfe7faded18889b1b5814fe101773d09f4bc6d5de252d1fc6b8e50971f';
+//    // val=web3.utils.asciiToHex(val);
+//    // console.log(web3.utils.hexToAscii(val));
+//        let uID=document.getElementById("uid").value;
+//        uID=web3.utils.asciiToHex(uID);
+//        console.log(web3.utils.asciiToHex(uID));
+//           const data=await window.contract.methods.getMilkDetails(web3.utils.hexToAscii(uID)).call();
+//           document.getElementById("dataArea").innerHTML="original location:"+data[0];
+//           document.getElementById("dataArea1").innerHTML="cattle details:"+data[1];
+//           document.getElementById("dataArea2").innerHTML="pH:"+data[2];
+//           document.getElementById("dataArea3").innerHTML="temp:"+data[3];
+//           document.getElementById("dataArea4").innerHTML="price:"+data[4];
+//    }
+//    
+const getuIDr = async () => {
+  const milID = document.getElementById("milkNum").value;
+  const uID = await window.contract.methods.getUniquemilkID(milID).call();
+  document.getElementById("milkArea").innerHTML = uID;
+};
+const getMilkSupplyChain=async()=>{
+	let uID=document.getElementById("uid").value;
+       uID=web3.utils.asciiToHex(uID);
+       console.log(web3.utils.asciiToHex(uID));
+          const data=await window.contract.methods.getSupplychaindetails(web3.utils.hexToAscii(uID)).call();
+          document.getElementById("DataArea").innerHTML="milkman address:"+data[0];
+          document.getElementById("DataArea1").innerHTML="milkman Name:"+data[1];
+          document.getElementById("DataArea2").innerHTML="Coop address"+data[2];
+          document.getElementById("DataArea3").innerHTML="Coop Name"+data[3];
+          document.getElementById("DataArea4").innerHTML="Retailer address"+data[4];
+          document.getElementById("DataArea5").innerHTML="Retailer Name"+data[5];
+		  document.getElementById("DataArea6").innerHTML="State"+data[6];
+
+}
+const audit=async()=>{
+	window.location.href = "/audit_milk";
+
+}
+function generateDynamicTable(data) {
+            // Create table element
+			const table = document.createElement("table");
+
+// Create table header row
+const headers = ["User Type", "pH", "Temp", "Price"]; // Column headings
+const headerRow = document.createElement("tr");
+headers.forEach(header => {
+	const th = document.createElement("th");
+	th.textContent = header;
+	headerRow.appendChild(th);
+});
+table.appendChild(headerRow);
+
+// Create table rows with data
+data.forEach(rowData => {
+	const row = document.createElement("tr");
+	rowData.forEach(item => {
+		const cell = document.createElement("td");
+		cell.textContent = item;
+		row.appendChild(cell);
+	});
+	table.appendChild(row);
+});
+
+return table;}
+
+        // Function to get milk details
+        const getMilk=async()=> {
+            //const uid = document.getElementById("uid").value;
+			let uID=document.getElementById("uid").value;
+            uID=web3.utils.asciiToHex(uID);
+            const data1=await window.contract.methods.getMilkDetails(web3.utils.hexToAscii(uID)).call();
+          
+            // Sample data for pH, temp, price (Replace with actual data retrieval)
+            const pH = data1[2][0];
+            const temp = data1[3][0];
+            const price = data1[4][0];
+			const usertype="Milkman";
+			const pH1 = data1[2][1];
+            const temp1 = data1[3][1];
+            const price1 = data1[4][1];
+			const usertype1="Cop";
+            // Create table data array
+			const data = [
+                [usertype, pH, temp, price],
+                [usertype1, pH1, temp1, price1]
+            ];
+            
+            const container = document.getElementById("tableContainer");
+            // Clear existing table if any
+            container.innerHTML = "";
+            // Generate and append dynamic table
+            container.appendChild(generateDynamicTable(data));
+        }
+
+   </script>
+</body>
+
+
+</html>

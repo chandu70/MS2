@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AboutUs</title>
+
+<style>
+
+    /* Basic styling for the navigation bar */
+    nav {
+        background-color: transparent;
+        color: black;
+        text-align: left; /* Align the content to the right */ 
+        overflow: hidden;    
+}
+    
+    ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        
+    }
+    
+    li {
+        float: right;
+    }
+    
+    li a {
+        font-size: 22px;
+        display: block;
+        color: white;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+    }
+    
+    li a:hover {
+        background-color: #111;
+    }
+.logo{
+    float: left;
+    margin-top: 0;
+}
+body {
+        background-image: url("/static/Bg2.jpg");
+        background-size: 1540px 960px; /* Cover the entire background */
+        background-repeat: no-repeat; /* Do not repeat the background image */
+        
+    }
+
+</style>
+
+
+    <meta charset="utf-8">
+    <title>
+       my website
+    </title>
+<link rel="stylesheet" type="text/css" href="/static/index.css">
+
+
+</head>
+<body >
+<nav>
+     <img class="logo" style="width: 6%;" src="../static/logo.jpeg">
+    <ul>
+        <li><a href="{{ url_for('login') }}">LOGIN</a></li>
+        <li><a href="{{ url_for('ContactUs') }}">CONTACT US</a></li>
+        <li><a href="{{ url_for('AboutUs') }}">ABOUT US</a></li>
+        <li><a href="{{ url_for('index') }}">HOME</a></li>
+        
+    </ul>
+</nav>
+
+
+
+     <br />
+     <h3>
+         
+<h1 style="font-size:40px; text-align:center; color:White;">Milk chain: Revolutionizing Transparency with Machine Learning and <br> Blockchain for Ensuring Milk Purity in 
+Dairy Industry</h1>
+
+<h1 style=" font-size:30px; text-align:center; color:White;">
+ABOUT US
+</h1>
+
+<p style=" font-size:20px; text-align:center; color:White; line-height: 30-px; margin-bottom: 30px;">Robust system 
+for predicting milk quality, leveraging advanced technologies 
+to enhance accuracy and efficiency in the dynamic dairy 
+industry. <br>
+Integration of blockchain-based supply chain boosts 
+transparency, revolutionizing milk quality assurance and 
+meeting industry needs. <br> This aims to assess milk 
+quality before the consumer purchases the milk.<br>
+We use Ethereum platform which is an open source decentralized blockchain <br> 
+This securely runs and verifies smart contracts on a peer-to-peer 
+network and users <br> 
+Cryptographic hashing methods are used to generate a unique hash ID. 
+<br> Hence after receiving the milk packet, the customer can track its supply 
+chain with the unique ID on the packet.<br>
+MetaMask is a cryptographic digital wallet for managing and 
+interacting with Ethereum blockchain <br> Assets and allows users to store, 
+send, and receive Ethereum tokens, <br> while also providing an easy-to-use 
+interface for accessing decentralized finance (DeFi) platforms.<br>
+Ganache is perfect for testing and development.
+</p>
+
+
+
+<!-- <div style=" text-align:right;
+margin-top:10px; ">
+<a style="font-size:20px; 
+background-color: white; 
+padding: 5px 5px 5px 5px;color:
+</div> -->
+  </h3>
+</body>
+</html>
+

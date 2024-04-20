@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact Us</title>
+
+<style>
+/* Basic styling for the navigation bar */
+nav {
+    background-color: transparent;
+    color: black;
+    text-align: left; /* Align the content to the right */ 
+    overflow: hidden;    
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+li {
+    float: right;
+}
+
+li a {
+    font-size: 22px;
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+li a:hover {
+    background-color: #111;
+}
+
+.logo{
+    float: left;
+    margin-top: 0;
+}
+
+.container {
+    display: inline-block;
+    text-align: center;
+    padding: 10px;
+}
+
+.circle-image {
+    border-radius: 50%;
+    width: 150px;
+    height: 150px;
+    overflow: hidden;
+    margin: 0 auto;
+    transition: transform 0.3s; /* Smooth transition effect */
+}
+
+.circle-image img {
+    display: block;
+    width: 100%;
+}
+
+.circle-image:hover {
+    transform: scale(1.1); /* Scale up the image on hover */
+}
+
+.details {
+    color: white;
+    text-align: center;
+    margin-top: 10px;
+}
+
+.center-container {
+    text-align: center;
+    margin: 0 auto; /* Center horizontally */
+}
+
+.left-container {
+    text-align: center;
+    margin: 0 auto; /* Center horizontally */
+}
+
+.right-container {
+    text-align: center;
+    margin: 0 auto; /* Center horizontally */
+}
+
+/* Styling for the h2 tag */
+h2 {
+    color: white;
+    text-align: center;
+    font-size: 30px; /* Adjust the font size */
+    margin-top: 20px; /* Adjust the top margin */
+}
+body {
+        background-image: url("/static/Bg2.jpg");
+        background-size: 1540px 1160px; /* Cover the entire background */
+        background-repeat: no-repeat; /* Do not repeat the background image */
+        
+    }
+
+</style>
+
+</head>
+<body >
+<nav>
+    <img class="logo" style="width: 6%;" src="./static/logo.jpeg">
+    <ul>
+        <li><a href="{{ url_for('login') }}">LOGIN</a></li>
+        <li><a href="{{ url_for('ContactUs') }}">CONTACT US</a></li>
+        <li><a href="{{ url_for('AboutUs') }}">ABOUT US</a></li>
+        <li><a href="{{ url_for('index') }}">HOME</a></li>
+        
+    </ul>
+</nav>
+
+<h2>OUR TEAM</h2>
+<div class="center-container">
+    <div class="container">
+        <div class="circle-image">
+            <img src="/static/mentor.jpeg" alt="Mentor Image">
+        </div>
+        <div class="details">
+            <p>MENTOR</p>
+            <p>SHARMILI NUKAPEYI</p>
+            <p><a href="mailto:logintosharmij@gmail.com">logintosharmij@gmail.com</a></p>
+        </div>
+    </div>
+</div>
+
+<div class="right-container">
+    <div class="container">
+        <div class="circle-image">
+            <img src="/static/Divya.jpeg" alt="Right Image 1">
+        </div>
+        <div class="details">
+            <p>TEAM MEMBER</p>
+            <p>DIVYA SRI KONDREDDY</p>
+            <p><a href="mailto:20jg1a0548.divyasri@gvpcew.ac.in">20jg1a0548.divyasri@gvpcew.ac.in</a></p>
+        </div>
+    </div>
+
+
+    <div class="container">
+        <div class="circle-image">
+            <img src="/static/chaitra.jpeg" alt="Left Image 2">
+        </div>
+        <div class="details">
+            <p>TEAM MEMBER</p>
+            <p>CHAITRA RAVI</p>
+            <p><a href="mailto:20jg1a0510.chaitra@gvpcew.ac.in">20jg1a0510.chaitra@gvpcew.ac.in</a></p>
+        </div>
+    </div>
+</div>
+
+<div class="right-container">
+    <div class="container">
+        <div class="circle-image">
+            <img src="/static/chandu.jpeg" alt="Right Image 1">
+        </div>
+        <div class="details">
+            <p>TEAM MEMBER</p>
+            <p>CHANDRIKA AMALAKANTI</p>
+            <p><a href="mailto:20jg1a0512.chandrika@gvpcew.ac.in">20jg1a0512.chandrika@gvpcew.ac.in</a></p>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="circle-image">
+            <img src="/static/Tinu.jpeg" alt="Right Image 2">
+        </div>
+        <div class="details">
+            <p>TEAM MEMBER</p>
+            <p>TINU ANJANI KONURI</p>
+            <p><a href="mailto:20jg1a0549.anjani@gvpcew.ac.in">20jg1a0549.anjani@gvpcew.ac.in</a></p>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

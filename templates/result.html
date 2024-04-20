@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ML Prediction Result</title>
+    <style>
+         p {
+            margin-top: 10px;
+            font-size: 25px;
+        }
+        .main {
+    width: 80%;
+    margin: 0 auto;
+    text-align: center;
+    .circle {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-top: 20px;
+        }
+        .green { background-color: green; }
+        .orange { background-color: orange; }
+        .red { background-color: red; }
+
+}
+
+    </style>
+</head>
+<body>
+    <div class="main">
+    <h2>Your Milk Quality is:</h2>
+     {% if prediction == 'high' %}
+            <div class="circle green"></div>
+    {% elif prediction == 'medium' %}
+            <div class="circle orange"></div>
+    {% elif prediction == 'low' %}
+            <div class="circle red"></div>
+    {% endif %}
+   
+    <!--<p>The predicted grade is: {{ prediction }}</p>-->
+    <p style="color: {{prediction_color}}">{{ prediction }}</p>
+</div>
+</body>
+</html>

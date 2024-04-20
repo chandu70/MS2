@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OUR WEBSITE</title>
+
+<style>
+
+    /* Basic styling for the navigation bar */
+    nav {
+        background-color:transparent;
+        color: black;
+        text-align: left; /* Align the content to the right */ 
+        overflow: hidden;    
+}
+    
+    ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        
+    }
+    
+    li {
+        float: right;
+    }
+    
+    li a {
+        font-size: 22px;
+        display: block;
+        color: white;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+    }
+    
+    li a:hover {
+        background-color: #111;
+        
+    }
+.logo{
+    float: left;
+    margin-top: 0;
+}
+body {
+        background-image: url("/static/Bg2.jpg");
+        background-size: 1540px 960px; /* Cover the entire background */
+        background-repeat: no-repeat; /* Do not repeat the background image */
+        
+    }
+
+
+
+    /* Add other background properties as needed */
+
+</style>
+
+
+    <meta charset="utf-8">
+    <title>
+       my website
+    </title>
+
+</head>
+<body background="./static/Bg2.jpg">
+<nav>
+     <img class="logo" style="width: 6%;" src="../static/logo.jpeg">
+    <ul>
+                
+        <li><a href="{{ url_for('login') }}">LOGIN</a></li>
+        <li><a href="{{ url_for('ContactUs') }}">CONTACT US</a></li>
+        <li><a href="{{ url_for('AboutUs') }}">ABOUT US</a></li>
+        <li><a href="{{ url_for('index') }}">HOME</a></li>
+        
+    </ul>
+</nav>
+
+
+
+     <br />
+     <h3>
+         
+
+<h1 style="font-size:40px; text-align:center; color:White;">Milk chain: Revolutionizing Transparency with Machine Learning and <br> Blockchain for Ensuring Milk Purity in 
+Dairy Industry</h1>
+
+<!-- <p style=" font-size:20px; text-align:center; color:White; line-height: 30-px; margin-bottom: 30px;"> Witness the dairy industry's evolution as technology  </p> -->
+
+
+  </h3>
+</body>
+
+</html>

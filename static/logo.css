@@ -1,0 +1,16 @@
+header {
+    position: fixed; /* This will make the header stay at the top even when scrolling */
+    top: 0;
+    width: 100%;
+    background-color: #ffffff; /* Optional: Set background color for the header */
+    z-index: 1000; /* Ensures the logo stays above other content */
+}
+
+.logo {
+    padding: 10px; /* Adjust as needed */
+}
+
+.logo img {
+    max-width: 20px
+    height: auto; /* Ensures the logo maintains its aspect ratio */
+}

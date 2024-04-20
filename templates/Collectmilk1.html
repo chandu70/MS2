@@ -1,0 +1,472 @@
+<!DOCTYPE html> 
+<html> 
+  
+<head> 
+    <title>CollectMilk</title> 
+    <link rel="stylesheet" > 
+          <script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js@1.0.0-beta.36/dist/web3.min.js" crossorigin="anonymous"></script>
+		  <style>
+			body {
+			 margin: 0;
+			 padding: 0;
+			 font-family: Arial, sans-serif;
+			 background-image: url("./static/Farmer.jpeg"); /* Your background image path */
+			 background-size: 1600px 1100px; /* Cover the entire viewport */
+			 background-position:center ; /* Center the background image */
+			 background-repeat: no-repeat; /* Do not repeat the background image */
+			 color: #333; /* Default text color */
+		 }
+		 
+		 .container {
+			 max-width: 600px;
+			 margin: 20px auto;
+			 padding: 20px;
+			 border: 1px solid #ccc;
+			 border-radius: 5px;
+			 background-color: rgba(255, 255, 255, 0.8);
+		 }
+		 
+		 .button-container {
+			 display: flex;
+			 flex-wrap: wrap;
+			 justify-content: space-between;
+			 margin-bottom: 20px;
+		 }
+		 
+		 /* .input-container {
+			 display: flex;
+			 flex-wrap: wrap;
+			 justify-content: space-between;
+		 }
+		 
+		 .input-group {
+			 flex: 0 0 calc(50% - 10px);
+			 margin-bottom: 10px;
+		 }
+		 
+		 .input-group label {
+			 width: 40%;
+			 margin-right: 10px;
+		 }
+		 
+		 .input-group input {
+			 flex: 1;
+		 }
+		  */
+		  /* CSS */
+.input-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.input-group {
+    flex: 0 0 calc(50% - 10px); /* Adjusted width to accommodate three fields in a row */
+    margin-bottom: 10px;
+}
+.input-group {
+    flex: 0 0 calc(33.33% - 10px); /* Adjusted width to accommodate three fields in a row */
+    margin-bottom: 10px;
+}
+
+
+.input-group label {
+    width: 35%; /* Adjusted width of labels */
+    margin-right: 10px;
+}
+
+.input-group input {
+    flex: 1;
+}
+
+		 button[type="submit"] {
+			width: 150px;
+				 padding: 6px 12px; /* Reduced button padding */
+				 margin: 5px 0; /* Adjusted button margin */
+				 cursor: pointer;
+				 background-color: hwb(320 4% 6%);
+				 color: white;
+				 border: none;
+				 border-radius: 5px;
+	
+					 }
+		 button[type="submit"]:hover {
+				 background-color: #f30967;
+			
+			 }
+		 .button-container {
+			 display: flex;
+			 flex-direction: row; /* Align items in a column */
+			 align-items: flex-start; /* Align items to the start of the column */
+		 }
+		 
+		 .button-container button {
+			 margin-bottom: 10px; /* Add margin between buttons */
+		 }
+		 
+		 h1 {
+				 text-align: center;
+			 }
+		 
+			 button {
+				width: 150px;
+				 padding: 6px 12px; /* Reduced button padding */
+				 margin: 5px 0; /* Adjusted button margin */
+				 cursor: pointer;
+				 background-color: #074defa0;
+				 color: white;
+				 border: none;
+				 border-radius: 5px;
+			 }
+		 
+			 button:hover {
+				 background-color: #3009dc;
+			 }
+		 
+			 input[type="text"],
+			 input[type="number"] {
+				 /* width: 110px; Adjusted input width */
+				 flex-direction: column;
+				 padding: 3px;
+				 margin: 8px 0;
+				 border: 1px solid #ccc;
+				 border-radius: 4px;
+			 }
+		 
+			 label {
+				 margin-top: 10px;
+			 }
+		 
+			 p {
+				 margin-top: 10px;
+			 }
+		 
+			 #contractArea,
+			 #contrcatStatus,
+			 #milkArea {
+			   margin-top: 10px;
+			 }
+			 .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1; /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: #fae9323b; /* Black w/ opacity */
+        }
+
+        /* Modal content */
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto; /* 15% from the top and centered */
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%; /* Could be more or less, depending on screen size */
+            max-width: 600px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+        }
+
+        /* Close button */
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 38px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+		fieldset {
+    border: 1px solid #ccc; /* Add border */
+    border-radius: 2px; /* Add border radius */
+    padding: 10px; /* Add padding */
+    margin-bottom: 10px; /* Add margin */
+    background-color:transparent; /* Background color */
+}
+
+		   </style>
+		
+	</head>
+	<body onload="connect()">
+		<div class="container">
+			<h1> Collect Milk Details</h1>
+			<!-- <button onClick="connect()">Connect to Metamask</button>
+			
+			<button onClick="connectContract()">Connect to Contract</button> -->
+			<!-- Modal -->
+			<div id="predictionModal" class="modal">
+				<div class="modal-content">
+					<span class="close" onclick="closeModal()">&times;</span>
+					<h2>Prediction Result</h2>
+					<p id="predictionText"></p>
+				</div>
+			</div>
+		
+			<h1 id="user"></h1>
+
+			<p id="contractArea"></p>
+			<p id="contractStatus"></p>
+
+			<div class="input-container">
+			<div class="input-group"> 
+			
+			<button onclick="putID()">Put Unique milk ID</button>
+			<input type="number" id="milkNum">
+			</div>
+			
+		    <div class="input-group">
+		   <button onclick="getuID()">Get Unique milk ID</button>
+			<input type="number" id="milkNumr">
+			</div>
+			<p id="milkArea"></p>
+		</div>
+			<div class="input-container">
+				<div class="input-group">
+					<label for="uID">Unique ID:</label>
+					<input type="text" id="uID" name="uID" required><br>
+				</div>
+			</div>
+			
+				<form id="predictionForm" method="POST" onsubmit="event.preventDefault(); submitForm();">
+					<div class="input-container">
+						<div class="input-group">
+							<label for="pH">pH:</label>
+							<input type="number" id="pH" name="pH" required>
+						</div>
+				
+						<div class="input-group">
+							<label for="temp">Temperature:</label>
+							<input type="number" id="temp" name="temp" required>
+							<!-- <input type="text" id="temp" value="{{ temp }}"> -->
+
+						</div>
+						</div>
+						<div class="input-container">
+						<div class="input-group">
+							<label for="taste">Taste:</label>
+							<input type="text" id="taste" name="taste" required>
+							</div>
+							<div class="input-group">
+							<label for="odor">Odor:</label>
+							<input type="text" id="odor" name="odor" required>
+							</div>
+						</div>
+						<div class="input-container">
+							<div class="input-group">
+							<label for="fat">Fat:</label>
+							<input type="text" id="fat" name="fat" required>
+							</div>
+							<div class="input-group">
+							<label for="turbidity">Turbidity:</label>
+							<input type="text" id="turbidity" name="turbidity" required>
+							</div>
+						</div>
+						<div class="input-container">
+							<div class="input-group">
+							<label for="colour">Colour:</label>
+							<input type="number" id="colour" name="colour" required><br>
+							<br>
+							</div>
+							<div class="input-group">
+					<center><button type="submit">Check Milk Quality</button></center>
+					</form>
+				</div>
+			</div>
+					
+				
+				<!-- <input type="submit" value="Check Milk Quality">
+				 -->
+
+			<!-- HTML -->
+<div class="input-container">
+    <div class="input-group">
+        <label for="cattledetails">Cattle Details:</label>
+        <input type="text" id="cattledetails" name="cattledetails" required>
+    </div>
+    <div class="input-group">
+        <label for="originlocation">Origin Location:</label>
+        <input type="text" id="originlocation" name="originlocation" required>
+	</div>
+
+    <div class="input-group">
+        <label for="price">Price:</label>
+        <input type="number" id="price" name="price" required>
+    </div>
+</div>
+
+			<!-- <div class="input-container">
+			
+			
+				<div class="input-group">
+					<label for="cattledetails">Cattle Details:</label>
+					<input type="text" id="cattledetails" name="cattledetails" required>
+				</div>
+				<div class="input-group">
+					<label for="originlocation">Origin Location:</label>
+					<input type="text" id="originlocation" name="originlocation" required>
+				</div>
+				<div>
+					<label for="price">Price:</label>
+        <input type="number" id="price" name="price" required><br>
+				</div>
+				
+			</div>-->
+			<button onclick="collectmilk()">Collect Milk</button> 
+			<div id="feedback"></div>
+		 
+			<button onClick="getMilk()">Get Milk details</button>
+			<input type="text" id="uid" placeholder="Enter milk uID">
+			
+			<p id="dataArea"></p>
+			<p id="dataArea1"></p>
+			<p id="dataArea2"></p>
+			<p id="dataArea3"></p>
+			<p id="dataArea4"></p>
+			<div id="tableContainer"></div>
+
+		</div>
+		<!-- <script src="./index.js"></script> -->
+		<script src="{{ url_for('static', filename='index.js') }}"></script>
+
+
+    <script >
+		const userName=async()=>{
+			const name=web3.contract.methods.getMilkmandetails(account).call();
+			document.getElementById("user").innerHTML="Hi"+name;
+		}
+        const collectmilk=async()=>{
+			console.log(account);
+            let milkID = document.getElementById('uID').value;
+            milkID=web3.utils.asciiToHex(milkID);
+            const milkmanID = account;
+			var date = new Date();
+			let text = date.toString();
+            const pH = document.getElementById('pH').value;
+            const temp = document.getElementById('temp').value;
+            const price = document.getElementById('price').value;
+            const cattleDetails = document.getElementById('cattledetails').value;
+            const originLocation = document.getElementById('originlocation').value;
+            await window.contract.methods.collectMilk(web3.utils.hexToAscii(milkID),milkmanID,pH,temp,price,text,cattleDetails,originLocation).send({from:account,gas:4000000});
+         }
+        // const getMilk=async()=>{
+        //     let uID=document.getElementById("uid").value;
+        //     uID=web3.utils.asciiToHex(uID);
+        //     const data=await window.contract.methods.getMilkDetails(web3.utils.hexToAscii(uID)).call();
+        //     document.getElementById("dataArea").innerHTML="original location:"+data[0];
+        //     document.getElementById("dataArea1").innerHTML="cattle details:"+data[1];
+        //     document.getElementById("dataArea2").innerHTML="pH:"+data[2];
+        //     document.getElementById("dataArea3").innerHTML="temp:"+data[3];
+        //     document.getElementById("dataArea4").innerHTML="price:"+data[4];
+        // }
+        const putID=async()=>{
+            const milID = document.getElementById('milkNum').value;
+            await window.contract.methods.putUniquemilkID(milID).send({from:account,gas:4000000});
+            document.getElementById("milkArea").innerHTML="Successfully added";
+        }
+        const getuID =async()=>{
+            const milID = document.getElementById('milkNumr').value;
+            const uID=await window.contract.methods.getUniquemilkID(milID).call();
+            document.getElementById("milkArea").innerHTML=uID;
+        }
+		function generateDynamicTable(data) {
+            // Create table element
+            const table = document.createElement("table");
+
+            // Create table header row
+            const headerRow = document.createElement("tr");
+            const headers = ["Stage","User","pH", "Temp", "Price"]; // Column headings
+            headers.forEach(header => {
+                const th = document.createElement("th");
+                th.textContent = header;
+                headerRow.appendChild(th);
+            });
+            table.appendChild(headerRow);
+
+            // Create table rows with data
+            const row = document.createElement("tr");
+            data.forEach(item => {
+                const cell = document.createElement("td");
+                cell.textContent = item;
+                row.appendChild(cell);
+            });
+            table.appendChild(row);
+
+            return table;
+        }
+
+        // Function to get milk details
+        const getMilk=async()=> {
+            //const uid = document.getElementById("uid").value;
+			let uID=document.getElementById("uid").value;
+            uID=web3.utils.asciiToHex(uID);
+            const data1=await window.contract.methods.getMilkDetails(web3.utils.hexToAscii(uID)).call();
+			document.getElementById("dataArea").innerHTML="original location:"+data1[0];
+            document.getElementById("dataArea1").innerHTML="cattle details:"+data1[1];
+			document.getElementById("dataArea2").innerHTML="Date Added:"+data1[5];
+
+            //Sample data for pH, temp, price (Replace with actual data retrieval)
+            const locat=data1[0];
+			const cattle=data1[1];
+			const pH = data1[2][0];
+            const temp = data1[3][0];
+            const price = data1[4][0];
+			const usertype="Milkman";
+			const Stage="Collect";
+            // Create table data array
+            const data = [Stage,usertype,pH, temp, price];
+
+            // Get table container
+            const container = document.getElementById("tableContainer");
+            // Clear existing table if any
+			//container.appendChild(generateDynamicTable([locat,cattle]));
+
+            container.innerHTML = "";
+
+            // Generate and append dynamic table
+            container.appendChild(generateDynamicTable(data));
+        }
+		// Function to open the modal
+		function openModal() {
+           var modal = document.getElementById('predictionModal');
+            modal.style.display = 'block';
+         }
+           // Function to close the modal
+        function closeModal() {
+            var modal = document.getElementById('predictionModal');
+            modal.style.display = 'none';
+        }
+
+        // Function to handle form submission
+        function submitForm() {
+            // Get form data
+            var form = document.getElementById('predictionForm');
+            var formData = new FormData(form);
+
+            // Make POST request to Flask route
+            fetch('/predict1', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Display prediction result in the modal
+                var predictionText = document.getElementById('predictionText');
+                predictionText.innerText = 'Milk Quality is: ' + data.prediction ;
+                openModal();
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+		
+    </script>
+</body>
+</html>
